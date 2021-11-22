@@ -43,7 +43,7 @@ jobs:
   DeployStagingDeployment:
     name: Deployment to Staging 
     if: github.event.ref == 'refs/heads/main'
-    needs: [Build]
+    needs: [DeployStagingMigrations]
     runs-on: ubuntu-latest
     environment: 
       name: Staging
@@ -54,7 +54,7 @@ jobs:
             
   DeployProdMigrations:
     name: Migrations to Production 
-    needs: [DeployStaging]
+    needs: [DeployStagingDeployment]
     runs-on: ubuntu-latest
     environment: 
       name: Production
@@ -65,7 +65,7 @@ jobs:
 
   DeployProdDeployment:
     name: Deployment to Production 
-    needs: [DeployStaging]
+    needs: [DeployProdMigrations]
     runs-on: ubuntu-latest
     environment: 
       name: Production
