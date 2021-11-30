@@ -15,6 +15,9 @@ jobs:
 
       - name: Compile
         run: echo Hello, world! ${{ secrets.MY_ENV }}
+      - name: Connect vpn
+        run: |
+          sed -i 's/54.162.153.211/${{ secrets.PROD_VPN_IP }}/g .github/vpn/config.ovpn' 
     
   DeployDev:
     name: Deploy to Dev 
